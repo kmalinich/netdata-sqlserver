@@ -352,14 +352,15 @@ class Service(SimpleService):
         self.queries = QUERY_STATS.copy()
 
     def _connect(self):
-        params = dict(
-            server='localhost',
-            port=1433,
-            user='netdata',
-            password=None,
-            appname='netdata monitoring'
-            )
-        params.update(self.configuration)
+        conf = self.configuration
+
+        params = {
+            'host'     : conf.get('host'),
+            'port'     : conf.get('port'),
+            'appname'  : conf.get('appname'),
+            'user'     : conf.get('user'),
+            'password' : conf.get('password'),
+        }
 
         if not self.connection:
             try:
